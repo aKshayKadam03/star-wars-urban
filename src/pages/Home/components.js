@@ -3,8 +3,9 @@ import styled from "styled-components";
 //all styled components for home
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 94%;
   max-width: 500px;
+  margin: 0 auto;
   padding: 10px;
   min-height: 600px; //stops search box from moving
 `;
@@ -12,6 +13,7 @@ const Wrapper = styled.div`
 const Logo = styled.div`
   text-align: center;
   margin-bottom: 35px;
+
   img {
     width: 200px;
   }
@@ -21,6 +23,7 @@ const SearchBox = styled.div`
   width: 100%;
   border-radius: 25px;
   padding: 5px 0px;
+
   display: flex;
   flex-direction: column;
   background: ${(props) => props.theme.backgroundSecondary};
@@ -63,6 +66,7 @@ const SearchDivider = styled.div`
 
 const SearchIcon = styled.img`
   flex: 1;
+
   background: ${(props) =>
     props.background ? props.theme.backgroundTertiary : "inherit"};
   border-radius: 50%;
@@ -73,7 +77,13 @@ const SearchIcon = styled.img`
 const SearchBody = styled.div`
   display: flex;
   flex-direction: column;
+
   padding-bottom: 10px;
+
+  > div:nth-child(${(props) => props.current}) {
+    background: ${(props) => props.theme.backgroundTertiary};
+    color: ${(props) => props.theme.fontTertiary};
+  }
 `;
 
 const SearchCard = styled.div`
@@ -85,6 +95,7 @@ const SearchCard = styled.div`
   padding: 5px 15px;
   margin: 5px 0;
   cursor: pointer;
+  border-radius: 2px;
 
   p {
     font-size: 16px;
@@ -96,11 +107,6 @@ const SearchCard = styled.div`
     font-size: 14px;
     text-transform: capitalize;
     margin: 0;
-  }
-
-  :hover {
-    background: ${(props) => props.theme.backgroundTertiary};
-    color: ${(props) => props.theme.fontTertiary};
   }
 `;
 

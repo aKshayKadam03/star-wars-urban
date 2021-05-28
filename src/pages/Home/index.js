@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import useFetchPeople from "./useFetchPeople";
 import {
   Wrapper,
   Logo,
@@ -14,26 +15,91 @@ import logo from "./resources/star-wars-logo.png";
 import cancel from "./resources/cancel.svg";
 import spinner from "./resources/spinner.svg";
 import search from "./resources/search.svg";
-import FetchData from "../../hooks/fetchData";
+import { useHistory } from "react-router";
+
+const initCurrentCardState = {
+  name: "",
+  url: "#",
+  number: 0,
+};
 
 function HomePage() {
   const [query, setQuery] = useState("");
+  const [currentCard, setCurrentCard] = useState(initCurrentCardState);
+  const history = useHistory();
 
-  const { data, isLoading, isError } = FetchData(
+  const { data, isLoading, isError } = useFetchPeople(
     `https://swapi.dev/api/people/`,
     query
   );
 
+  const onCardSelectionHandler = () => {
+    const { url } = currentCard;
+    let arr = url.split("/");
+    while (!arr[arr.length - 1].trim()) {
+      arr.pop();
+    }
+    let id = arr[arr.length - 1];
+    history.push({
+      pathname: `/person/${id}`,
+    });
+  };
+
+  const mouseHoverHandler = (number, name, url) => {
+    setCurrentCard({
+      name,
+      number,
+      url,
+    });
+  };
+
+  const mouseLeaveHandler = () => {
+    setCurrentCard(initCurrentCardState);
+  };
+
   useEffect(() => {
-    console.log(data);
-  }, [query]);
+    // console.log(currentCard, "from useEffect");
+  }, [currentCard]);
+
+  const keyPressHandler = (e) => {
+    let { name, number, url } = currentCard;
+    if (e.key === "ArrowDown") {
+      if (number < data.length) {
+        setCurrentCard({
+          number: number + 1,
+          name: data[number].name,
+          url: data[number].url,
+        });
+      } else {
+        setCurrentCard({
+          number: 0,
+          name: query,
+          url: "#",
+        });
+      }
+    } else if (e.key === "ArrowUp") {
+      if (number > 0) {
+        setCurrentCard({
+          number: number - 1,
+          name: data[number]?.name,
+          url: data[number]?.url,
+        });
+      } else {
+        setCurrentCard({
+          number: data.length,
+          name: data[number]?.name,
+          url: data[number]?.url,
+        });
+      }
+    }
+  };
 
   const onQueryChange = (e) => {
     setQuery(e.target.value);
   };
 
   return (
-    <Wrapper>
+    <Wrapper onKeyDownCapture={keyPressHandler}>
       <Logo>
         <img src={logo} alt="Star Wars Logo" />
       </Logo>
@@ -61,9 +127,16 @@ function HomePage() {
         <SearchDivider direction="horizontal" />
 
         {/* Search Body Start */}
-        <SearchBody>
-          {data?.map(({ birth_year, gender, name, url }) => (
-            <SearchCard key={url}>
+        <SearchBody
+          onMouseLeave={mouseLeaveHandler}
+          current={currentCard?.number}
+        >
+          {data?.map(({ birth_year, gender, name, url }, index) => (
+            <SearchCard
+              onClick={onCardSelectionHandler}
+              onMouseEnter={() => mouseHoverHandler(index + 1, name, url)}
+              key={url}
+            >
               <div>
                 <p>{name}</p>
                 <span>{birth_year}</span>
