@@ -12,10 +12,11 @@ import {
   SearchCard,
   SearchConfirmation,
 } from "./components";
-import logo from "./resources/star-wars-logo.png";
-import cancel from "./resources/cancel.svg";
-import spinner from "./resources/spinner.svg";
-import search from "./resources/search.svg";
+
+import logo from "../../resources/star-wars-logo.png";
+import cancel from "../../resources/cancel.svg";
+import spinner from "../../resources/spinner.svg";
+import search from "../../resources/search.svg";
 import { useHistory } from "react-router";
 
 const initCurrentCardState = {
@@ -40,7 +41,7 @@ function HomePage() {
 
   const onCardSelectionHandler = () => {
     const { url } = currentCard;
-    let arr = url.split("/");
+    let arr = url?.split("/");
     while (!arr[arr?.length - 1].trim()) {
       arr.pop();
     }
@@ -52,7 +53,6 @@ function HomePage() {
 
   const mouseEnterHandler = (number, name, url) => {
     setCurrentCard({
-      name,
       number,
       url,
     });
@@ -63,33 +63,28 @@ function HomePage() {
   };
 
   useEffect(() => {
-    // document.activeElement === inputRef.current
-    if (inputFocus) {
+    if (inputFocus && query.length !== 0) {
       setSearchBodyVisibility(true);
     } else {
       setSearchBodyVisibility(false);
     }
   }, [query]);
 
-  useEffect(() => {
-    console.log(currentCard);
-  }, [currentCard]);
+  // useEffect(() => {}, [currentCard]);
 
   const keyPressHandler = (e) => {
-    let { name, number, url } = currentCard;
+    let { number, url } = currentCard;
     switch (e.key) {
       case "ArrowDown": {
         if (number < data?.length) {
           setCurrentCard({
             number: number + 1,
-            name: data[number].name,
             url: data[number].url,
           });
           setQuery(data[number].name);
         } else {
           setCurrentCard({
             number: 0,
-            name: userInputBackup.current,
             url: "#",
           });
           setQuery(userInputBackup.current);
@@ -98,25 +93,30 @@ function HomePage() {
       }
 
       case "ArrowUp": {
-        if (number > 1) {
+        if (number === 1) {
           setCurrentCard({
             number: number - 1,
-            name: data[number - 2]?.name,
+            url: "#",
+          });
+          setQuery(userInputBackup.current);
+        } else if (number > 1) {
+          setCurrentCard({
+            number: number - 1,
             url: data[number - 2]?.url,
           });
           setQuery(data[number - 2]?.name);
         } else {
           setCurrentCard({
             number: data?.length,
-            name: data[data?.length]?.name,
-            url: data[data?.length]?.url,
+            url: data[data?.length - 1]?.url,
           });
-          setQuery(userInputBackup.current);
+          setQuery(data[data?.length - 1]?.name);
         }
         break;
       }
 
       case "Enter" || "NumpadEnter": {
+        if (url === "#") return;
         onCardSelectionHandler();
         break;
       }

@@ -80,7 +80,9 @@ const SearchBody = styled.div`
 
   padding-bottom: 10px;
 
+  //highlighting the hovered card from the search results
   > div:nth-child(${(props) => props.current}) {
+    transition: all 500ms ease;
     background: ${(props) => props.theme.backgroundTertiary};
     color: ${(props) => props.theme.fontTertiary};
   }

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-function useFetchPeople(url, query, userInputBack) {
+function useFetchPeople(url, query, userInputBackup) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -23,12 +23,13 @@ function useFetchPeople(url, query, userInputBack) {
 
   //reducing the number of calls while user types
   useEffect(() => {
+    if (userInputBackup.current === "" || null) return;
     setIsLoading(true);
     debounceTimer.current && clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
       getPeople();
     }, 500);
-  }, [userInputBack.current]);
+  }, [userInputBackup.current]);
 
   return { data, isLoading, isError };
 }
