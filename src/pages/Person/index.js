@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
-import { useLocation, useParams } from "react-router";
+import React from "react";
+import { useParams } from "react-router";
 import useFetchPerson from "./useFetchPerson";
+import { Link } from "react-router-dom";
+
+//styled components
 import {
   Wrapper,
   PersonHeader,
@@ -10,13 +13,13 @@ import {
   PersonNav,
   PersonConfirmation,
 } from "./components";
+
+//images and icons
 import back from "../../resources/back.svg";
 import wallpaperOne from "../../resources/wallpaperOne.jpg";
 import wallpaperTwo from "../../resources/wallpaperTwo.jpg";
 import wallpaperThree from "../../resources/wallpaperThree.jpg";
 import wallpaperFour from "../../resources/wallpaperFour.jpg";
-
-import { Link } from "react-router-dom";
 
 const wallpaperArray = [
   wallpaperOne,
@@ -28,25 +31,15 @@ const wallpaperArray = [
 function Person() {
   const { id } = useParams();
 
+  //custom hook for fetching data
   const { data, isLoading, isError } = useFetchPerson(
     `https://swapi.dev/api/people/${id}/`
   );
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const { name, birth_year, gender, hair_color, height, mass, skin_color } =
+    data;
 
-  const {
-    name,
-    birth_year,
-    eye_color,
-    gender,
-    hair_color,
-    height,
-    mass,
-    skin_color,
-  } = data;
-
+  //generates random indexes to display random picture
   const randomWallpaperChooser = () => {
     return Math.floor(Math.random() * 10000) % 4;
   };
@@ -55,11 +48,11 @@ function Person() {
     <>
       {isLoading ? (
         <PersonConfirmation>
-          <h1>Loading</h1>
+          <h2>Loading</h2>
         </PersonConfirmation>
       ) : isError ? (
         <PersonConfirmation>
-          <h1>Something went wrong</h1>
+          <h2>Something went wrong</h2>
         </PersonConfirmation>
       ) : (
         <Wrapper>
@@ -103,12 +96,7 @@ function Person() {
           </PersonInfo>
           <PersonWallpaper
             backgroundImg={wallpaperArray[randomWallpaperChooser()]}
-          >
-            {/* <img
-          src="https://cdn.statically.io/img/wallpaperaccess.com/full/1609117.jpg"
-          alt="wallpapers"
-        ></img> */}
-          </PersonWallpaper>
+          />
         </Wrapper>
       )}
     </>

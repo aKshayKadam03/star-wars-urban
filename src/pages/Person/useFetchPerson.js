@@ -8,6 +8,7 @@ function useFetchPerson(url) {
 
   const getPerson = () => {
     setIsLoading(true);
+    setIsError(false);
     axios
       .get(url)
       .then((res) => setData(res.data))
@@ -15,7 +16,6 @@ function useFetchPerson(url) {
       .finally((res) => setIsLoading(false));
   };
 
-  //throttling the number of calls
   useEffect(() => {
     getPerson();
   }, [url]);

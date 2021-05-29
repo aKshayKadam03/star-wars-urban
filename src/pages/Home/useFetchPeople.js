@@ -20,18 +20,34 @@ function useFetchPeople(url, query, userInputBackup) {
       .catch((err) => setIsError(true))
       .finally((res) => setIsLoading(false));
   };
+  const clearFetchedData = () => {
+    setData([]);
+  };
 
   //reducing the number of calls while user types
   useEffect(() => {
-    if (userInputBackup.current === "" || null) return;
+    setIsLoading(false); // safe guard against infinite spinner.
+    clearFetchedData(); // resetting data on query change
+
+    if (
+      userInputBackup.current?.trim()?.length === 0 ||
+      userInputBackup.current === null
+    )
+      return;
+
     setIsLoading(true);
     debounceTimer.current && clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
       getPeople();
     }, 500);
+
+    // clean up function
+    return () => {
+      clearTimeout(debounceTimer.current);
+    };
   }, [userInputBackup.current]);
 
-  return { data, isLoading, isError };
+  return { data, isLoading, isError, clearFetchedData };
 }
 
 export default useFetchPeople;

@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router";
 import useFetchPeople from "./useFetchPeople";
+
+//styled components
 import {
   Wrapper,
   Logo,
@@ -13,14 +16,13 @@ import {
   SearchConfirmation,
 } from "./components";
 
+//icons and images from resources
 import logo from "../../resources/star-wars-logo.png";
 import cancel from "../../resources/cancel.svg";
 import spinner from "../../resources/spinner.svg";
 import search from "../../resources/search.svg";
-import { useHistory } from "react-router";
 
 const initCurrentCardState = {
-  name: "",
   url: "#",
   number: 0,
 };
@@ -32,14 +34,17 @@ function HomePage() {
   const [inputFocus, setInputFocus] = useState(false);
   const history = useHistory();
   const userInputBackup = useRef(null);
+  const inputRef = useRef(null);
 
-  const { data, isLoading, isError } = useFetchPeople(
+  //custom hook to fetch data
+  const { data, isLoading, isError, clearFetchedData } = useFetchPeople(
     `https://swapi.dev/api/people/`,
     query,
     userInputBackup
   );
 
   const onCardSelectionHandler = () => {
+    //extracting character id from url
     const { url } = currentCard;
     let arr = url?.split("/");
     while (!arr[arr?.length - 1].trim()) {
@@ -51,6 +56,7 @@ function HomePage() {
     });
   };
 
+  //mouse hover handlers
   const mouseEnterHandler = (number, name, url) => {
     setCurrentCard({
       number,
@@ -63,19 +69,25 @@ function HomePage() {
   };
 
   useEffect(() => {
-    if (inputFocus && query.length !== 0) {
+    if (inputFocus && query?.length !== 0) {
       setSearchBodyVisibility(true);
     } else {
       setSearchBodyVisibility(false);
     }
   }, [query]);
 
-  // useEffect(() => {}, [currentCard]);
-
+  /**
+   * KeyPressHandler --------------------------------------------------------
+   * Handles the highlight and selection of cards in searchBody(search results).
+   * e.preventDefault()avoid switching between first and last letter of the input value.
+   * Setting the current highlighted name and their link to current state.
+   * If clicked or pressed entered will be redirected to the link.
+   */
   const keyPressHandler = (e) => {
     let { number, url } = currentCard;
     switch (e.key) {
       case "ArrowDown": {
+        e.preventDefault();
         if (number < data?.length) {
           setCurrentCard({
             number: number + 1,
@@ -93,6 +105,7 @@ function HomePage() {
       }
 
       case "ArrowUp": {
+        e.preventDefault();
         if (number === 1) {
           setCurrentCard({
             number: number - 1,
@@ -126,6 +139,13 @@ function HomePage() {
     }
   };
 
+  /**
+   * Query Handlers
+   * Handles input queries.
+   * setQuery() => sets the input given by user
+   * userInputBackup => has the same value given by user initially.
+   * A safe guard against loosing the user input when the user switches between different results with arrow keys.
+   */
   const onQueryChange = (e) => {
     setQuery(e.target.value);
     userInputBackup.current = e.target.value;
@@ -134,10 +154,33 @@ function HomePage() {
 
   const clearQuery = () => {
     setQuery("");
+    clearFetchedData();
   };
 
+  //Handling input focus and search body/results
+  const onFocusToggle = () => {
+    if (document.activeElement === inputRef.current) {
+      setInputFocus(true);
+      if (data?.length > 0) {
+        setSearchBodyVisibility(true);
+      }
+    } else {
+      setInputFocus(false);
+      setSearchBodyVisibility(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", onFocusToggle);
+
+    return () => {
+      // clean up function
+      document.removeEventListener("click", onFocusToggle);
+    };
+  }, [data]);
+
   return (
-    <Wrapper onKeyDownCapture={keyPressHandler}>
+    <Wrapper>
       <Logo>
         <img src={logo} alt="Star Wars Logo" />
       </Logo>
@@ -146,23 +189,21 @@ function HomePage() {
         {/* Search Head Start */}
         <SearchHead>
           <SearchInput
-            onFocusCapture={() => setInputFocus(true)}
+            ref={inputRef}
+            onKeyDown={keyPressHandler}
             onChange={onQueryChange}
             value={query}
             placeholder="Search by name"
           />
 
-          {query?.length !== 0 && (
-            <>
-              <SearchIcon
-                onClick={clearQuery}
-                background={false}
-                src={cancel}
-                alt="cancel"
-              ></SearchIcon>
-              <SearchDivider direction="vertical" />
-            </>
-          )}
+          <SearchIcon
+            hidden={query?.length === 0}
+            onClick={clearQuery}
+            background={false}
+            src={cancel}
+            alt="cancel"
+          ></SearchIcon>
+          <SearchDivider hidden={query?.length === 0} direction="vertical" />
 
           <SearchIcon
             background={isLoading ? false : true}
@@ -190,7 +231,7 @@ function HomePage() {
               </SearchConfirmation>
             ) : data?.length === 0 ? (
               <SearchConfirmation>
-                <h2>No data found</h2>
+                <h2>No match found</h2>
               </SearchConfirmation>
             ) : (
               data?.map(({ birth_year, gender, name, url }, index) => (

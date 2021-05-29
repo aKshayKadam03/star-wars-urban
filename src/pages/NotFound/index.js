@@ -1,11 +1,15 @@
-import React from 'react';
-import './index.css';
+import React from "react";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  color: ${(props) => props.theme.fontPrimary};
+`;
 
 function NotFound() {
   return (
-    <div className="not-found">
-      <h2>This is not the page you are looking for</h2>
-    </div>
+    <Wrapper>
+      <h1>This is not the page you are looking for.</h1>
+    </Wrapper>
   );
 }
 
