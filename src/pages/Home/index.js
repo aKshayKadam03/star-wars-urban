@@ -18,7 +18,7 @@ import {
 
 //icons and images from resources
 import logo from "../../resources/star-wars-logo.png";
-import cancel from "../../resources/cancel.svg";
+import clear from "../../resources/cancel.svg";
 import spinner from "../../resources/spinner.svg";
 import search from "../../resources/search.svg";
 
@@ -182,13 +182,14 @@ function HomePage() {
   return (
     <Wrapper>
       <Logo>
-        <img src={logo} alt="Star Wars Logo" />
+        <img data-cy="logo" src={logo} alt="Star Wars Logo" />
       </Logo>
 
       <SearchBox>
         {/* Search Head Start */}
         <SearchHead>
           <SearchInput
+            data-cy="input"
             ref={inputRef}
             onKeyDown={keyPressHandler}
             onChange={onQueryChange}
@@ -197,11 +198,12 @@ function HomePage() {
           />
 
           <SearchIcon
+            data-cy="clear"
             hidden={query?.length === 0}
             onClick={clearQuery}
             background={false}
-            src={cancel}
-            alt="cancel"
+            src={clear}
+            alt="clear"
           ></SearchIcon>
           <SearchDivider hidden={query?.length === 0} direction="vertical" />
 
@@ -218,6 +220,7 @@ function HomePage() {
 
         {searchBodyVisibility && (
           <SearchBody
+            data-cy="searchBody"
             onMouseLeave={mouseLeaveHandler}
             current={currentCard?.number}
           >
@@ -236,6 +239,7 @@ function HomePage() {
             ) : (
               data?.map(({ birth_year, gender, name, url }, index) => (
                 <SearchCard
+                  data-cy="searchCard"
                   onClick={onCardSelectionHandler}
                   onMouseEnter={() => mouseEnterHandler(index + 1, name, url)}
                   key={url}

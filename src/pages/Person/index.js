@@ -55,9 +55,9 @@ function Person() {
           <h2>Something went wrong</h2>
         </PersonConfirmation>
       ) : (
-        <Wrapper>
+        <Wrapper data-cy="person">
           <PersonInfo>
-            <Link to="/">
+            <Link data-cy="backToHome" to="/">
               <PersonNav>
                 <img src={back} alt="back"></img>
                 <p>Back to home</p>
@@ -65,7 +65,7 @@ function Person() {
             </Link>
 
             <PersonHeader>
-              <h1>{name}</h1>
+              <h1 data-cy="name">{name}</h1>
             </PersonHeader>
             <PersonBody>
               <div>
