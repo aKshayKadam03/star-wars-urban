@@ -71,7 +71,7 @@ I don't own the content such as images or icons on this web app, this was purely
 
 ![image](https://user-images.githubusercontent.com/39058941/120082334-fd9b8580-c0df-11eb-812b-70f091736baf.png)
 ![image](https://user-images.githubusercontent.com/39058941/120082345-0ee49200-c0e0-11eb-85d1-77c139547831.png)
-![image](https://user-images.githubusercontent.com/39058941/120082340-07bd8400-c0e0-11eb-9a2b-908079e10068.png)
+ 
 
 
 ### Contributors
