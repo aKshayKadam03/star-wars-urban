@@ -17,13 +17,13 @@ const Wrapper = styled.div`
 
 function App() {
   const theme = {
-    fontPrimary: "#9fa0a1",
-    fontSecondary: "#ffeb00",
-    fontTertiary: "#2D2F30",
+    fontColorPrimary: "#9fa0a1",
+    fontColorSecondary: "#ffeb00",
+    fontColorTertiary: "#2D2F30",
 
-    backgroundPrimary: "#110B0B",
-    backgroundSecondary: "#2D2F30",
-    backgroundTertiary: "#ffeb00",
+    backgroundColorPrimary: "#110B0B",
+    backgroundColorSecondary: "#2D2F30",
+    backgroundColorTertiary: "#ffeb00",
   };
 
   return (
