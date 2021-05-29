@@ -28,6 +28,13 @@ Run the app using the following command.
 yarn start
 ```
 
+<br>
+To run test.
+
+```
+yarn run cypress
+```
+
 ### Features
 
 - User can search a character.
@@ -59,6 +66,13 @@ I don't own the content such as images or icons on this web app, this was purely
 
 ![two](https://user-images.githubusercontent.com/39058941/120072925-b8f9f500-c0b3-11eb-86e4-6a09ae24430c.png)
 ![one](https://user-images.githubusercontent.com/39058941/120072914-b1d2e700-c0b3-11eb-99db-3401f61279a0.png)
+
+### Test Results
+
+![image](https://user-images.githubusercontent.com/39058941/120082334-fd9b8580-c0df-11eb-812b-70f091736baf.png)
+![image](https://user-images.githubusercontent.com/39058941/120082345-0ee49200-c0e0-11eb-85d1-77c139547831.png)
+![image](https://user-images.githubusercontent.com/39058941/120082340-07bd8400-c0e0-11eb-9a2b-908079e10068.png)
+
 
 ### Contributors
 
