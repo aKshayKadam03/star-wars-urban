@@ -54,6 +54,7 @@ const SearchInput = styled.input`
   outline: 0;
   flex: 8;
 
+  height: 30px;
   background: inherit;
 
   color: ${(props) => props.theme.fontColorPrimary};
@@ -101,7 +102,7 @@ const SearchCard = styled.div`
   justify-content: space-between;
 
   padding: 5px 15px;
-  margin: 5px 0;
+
   border-radius: 2px;
 
   color: ${(props) => props.theme.fontColorPrimary};
