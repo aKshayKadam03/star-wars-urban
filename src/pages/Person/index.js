@@ -15,11 +15,11 @@ import {
 } from "./components";
 
 //images and icons
-import back from "../../resources/back.svg";
-import wallpaperOne from "../../resources/wallpaperOne.jpg";
-import wallpaperTwo from "../../resources/wallpaperTwo.jpg";
-import wallpaperThree from "../../resources/wallpaperThree.jpg";
-import wallpaperFour from "../../resources/wallpaperFour.jpg";
+import back from "../../resources/icons/back.svg";
+import wallpaperOne from "../../resources/images/wallpaperOne.jpg";
+import wallpaperTwo from "../../resources/images/wallpaperTwo.jpg";
+import wallpaperThree from "../../resources/images/wallpaperThree.jpg";
+import wallpaperFour from "../../resources/images/wallpaperFour.jpg";
 
 const wallpaperArray = [
   wallpaperOne,

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-//all styled components for home
+//all styled components for home page
 
 const Wrapper = styled.div`
   width: 95%;

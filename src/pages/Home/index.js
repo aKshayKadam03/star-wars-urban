@@ -17,10 +17,10 @@ import {
 } from "./components";
 
 //icons and images from resources
-import logo from "../../resources/star-wars-logo.png";
-import clear from "../../resources/cancel.svg";
-import spinner from "../../resources/spinner.svg";
-import search from "../../resources/search.svg";
+import logo from "../../resources/images/star-wars-logo.png";
+import clear from "../../resources/icons/cancel.svg";
+import spinner from "../../resources/icons/spinner.svg";
+import search from "../../resources/icons/search.svg";
 
 const initCurrentCardState = {
   url: "#",
@@ -146,7 +146,7 @@ function HomePage() {
    * userInputBackup => has the same value given by user initially.
    * A safe guard against loosing the user input when the user switches between different results with arrow keys.
    */
-  const onQueryChange = (e) => {
+  const onQueryChangeHandler = (e) => {
     setQuery(e.target.value);
     userInputBackup.current = e.target.value;
     setCurrentCard(initCurrentCardState);
@@ -192,7 +192,7 @@ function HomePage() {
             data-cy="input"
             ref={inputRef}
             onKeyDown={keyPressHandler}
-            onChange={onQueryChange}
+            onChange={onQueryChangeHandler}
             value={query}
             placeholder="Search by name"
           />

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-//all styled components for person
+//all styled components for person page
 
 const Wrapper = styled.div`
   display: flex;
