@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-function useFetchPeople(url, query) {
+function useFetchPeople(url, query, userInputBack) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -9,6 +9,7 @@ function useFetchPeople(url, query) {
 
   const getPeople = () => {
     setIsLoading(true);
+    setIsError(false);
     axios
       .get(url, {
         params: {
@@ -20,14 +21,14 @@ function useFetchPeople(url, query) {
       .finally((res) => setIsLoading(false));
   };
 
-  //throttling the number of calls
+  //reducing the number of calls while user types
   useEffect(() => {
     setIsLoading(true);
     debounceTimer.current && clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
       getPeople();
     }, 500);
-  }, [query]);
+  }, [userInputBack.current]);
 
   return { data, isLoading, isError };
 }

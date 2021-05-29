@@ -37,13 +37,13 @@ const SearchHead = styled.div`
 
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
 
   > * {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 5px 0;
   }
 `;
 
@@ -110,6 +110,11 @@ const SearchCard = styled.div`
   }
 `;
 
+const SearchConfirmation = styled.div`
+  color: ${(props) => props.theme.fontPrimary};
+  text-align: center;
+`;
+
 export {
   Wrapper,
   Logo,
@@ -120,4 +125,5 @@ export {
   SearchDivider,
   SearchBody,
   SearchCard,
+  SearchConfirmation,
 };
