@@ -3,7 +3,7 @@
 An assignment from Urban Piper.
 A star wars search component, which lets user search characters and view their details.
 
-[Live Demo](#)
+[Live Demo](https://urban-piper-starwars.vercel.app/)
 
 ### Usage
 
