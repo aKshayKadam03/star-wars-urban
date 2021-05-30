@@ -36,10 +36,18 @@ yarn run cypress
 ```
 
 ### Features
+ #### Home Page
+  - Users can search a character.
+  - A user can navigate the search results via mouse or keyboard arrow keys.
+  - When a user navigates between search results, the input value changes to the selected search card value.
+  - When a user clicks outside the search box the search result closes and when he/she clicks on the input box the search results are persisted if there is no change in query.
+  - A click on clear button will clear input query.
+  - Lets user select a character with mouse click or enter key which will redirect to person page.
+ 
+ #### Person Page
+  - Lets user analyze the details of characters.
+  - A back to home button to get back to home page.
 
-- User can search a character.
-- A user can navigate the search results via mouse or keyboard arrow keys.
-- Lets user select a character with mouse click or enter key.
 
 ### Credits
 
@@ -61,6 +69,7 @@ I don't own the content such as images or icons on this web app, this was purely
 - Styled Components
 - React-Router-DOM
 - Axios
+- Cypress
 
 ### Screenshots
 
